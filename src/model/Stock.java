@@ -25,5 +25,5 @@ public class Stock {
 		this.price = price;
 	}
 	
-	//getters and setters
+
 }
