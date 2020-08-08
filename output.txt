@@ -1,2 +1,0 @@
-Ticker: MSFT
-Share price: 230.0
