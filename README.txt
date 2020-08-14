@@ -8,6 +8,5 @@ FEATURES
 	*-more functionality in this are will be added later.
 -Can spit output into output.txt, ticker with share price
 	-Pulls this from DB.
-	*-Consider making it so that data is pulled from DB (maybe all entered
-	  manually for now, maybe update upon program launch later) and spit
-	  into a file for just a single ticker at a time.'
+-Contains functioning Junit tests that are a little janky.
+-Functioning Maven support

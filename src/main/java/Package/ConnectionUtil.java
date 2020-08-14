@@ -1,11 +1,12 @@
-package Package;
+package main.java.Package;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+//this class gets and returns the connection to the database
 
-public class DBconnect {
+public class ConnectionUtil {
 	
 	private static final String username = "postgres";
 	private static final String password = "96discgolf1";
@@ -20,7 +21,7 @@ public class DBconnect {
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			}
-		connection = DriverManager.getConnection(url, username, password);
+			connection = DriverManager.getConnection(url, username, password);
 		}
 		
 		
