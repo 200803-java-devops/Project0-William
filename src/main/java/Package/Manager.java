@@ -1,5 +1,6 @@
 package main.java.Package;
 
+import java.io.IOException;
 import java.util.Scanner;
 import main.java.Package.SQL;
 import main.java.Package.IOHandler;
@@ -11,8 +12,8 @@ public class Manager {
 	private String controller2;
 	Scanner sc = new Scanner(System.in);
 	private String ticker; 
-	private String InputFile = "input.txt";
-	private String OutputFile = "output.txt";
+	private String InputFile = "input.csv";
+	private String OutputFile = "output.csv";
 	
 	
 	
@@ -37,8 +38,12 @@ public class Manager {
 				case "file":
 				//**create new IOhandler which will get input and pass onto SQL class for query and then do output
 					IOHandler io = new IOHandler();
-					io.getFileInput(InputFile);
-					io.writeOutput(OutputFile);
+					try {
+						io.getFileInput(InputFile);
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+						io.writeOutput(OutputFile);
 					//Notice my difference here in how I handle this case vs the other case.  Which one is better?
 					controller = "No";
 					break;
