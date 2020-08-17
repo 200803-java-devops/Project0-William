@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import main.java.Package.SQL;
+import main.java.model.Stock;
 
 //Try to make this class handle all the file reading and writing...Not sure if it needs a while loop.
 //It is this class' job to read and write to external files
@@ -18,50 +19,70 @@ import main.java.Package.SQL;
 
 public class IOHandler {
 
-	public ArrayList<String> text = new ArrayList<String>();
-	//Scanner scanner;
 	public FileWriter writer;
 	BufferedReader br;
 	
 
 	
 	
-	public void getFileInput(String file) throws IOException {
+	public List<String> getTickersFileInput(String file) throws IOException {
 		System.out.println("Reading your input...");
+		ArrayList<String> text = new ArrayList<String>();
 		try {
-	//		scanner = new Scanner( new File(file) );
-	//		text = scanner.useDelimiter("\\A").next();
 			File csv = new File(file);
 			br = new BufferedReader(new FileReader(csv));
-			//text = new StringBuffer();
 			br.readLine();
 			while (br.ready()) {
 				text.add(br.readLine().split(",")[0]); 
-//				text.append(br.readLine().split(","));
-//				System.out.println(text);
-//				System.out.println((br.readLine()));
-				
 			}
 		System.out.println("Input found: " + text);
-
 			
 		} catch (FileNotFoundException e) {
 			System.err.println("There is no detectable input file in the root of the project!");
 			e.printStackTrace();
 		} finally {
-			//scanner.close();
 			br.close();
 		}
+		
+		return text;
+		
+	}
+	
+	public List<Stock> getStocksFileInput(String file) throws IOException {
+		System.out.println("Reading your input...");
+		List<Stock> text = new ArrayList<Stock>();
+		try {
+			File csv = new File(file);
+			br = new BufferedReader(new FileReader(csv));
+			br.readLine();
+			String[] array;
+			while (br.ready()) {
+				Stock stock = new Stock();
+				array = br.readLine().split(",");
+				stock.setTicker(array[0]);
+				stock.setPrice(Double.parseDouble(array[1]));
+				stock.setShares(Integer.valueOf(array[2]));
+				text.add(stock);
+			}
+			
+		} catch (FileNotFoundException e) {
+			System.err.println("There is no detectable input file in the root of the project!");
+			e.printStackTrace();
+		} finally {
+			br.close();
+		}
+		
+		return text;
 		
 	}
 	
 	
 	
 	//experiment with the commas before going to a new line.  not sure how that works.
-	public void writeOutput(String file) {
+	//ADJUST SO IT TAKES IN AN ARRAY
+	public void writeOutput(List<Stock> stocks, String file) {
 		System.out.println("Writing your output data to external file...");
 		try {
-			//Insert a loop here once support for multiple IO is added
 			writer = new FileWriter(file, false);
 			writer.write("");
 			writer.write("Tickers,");

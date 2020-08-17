@@ -9,13 +9,19 @@ public class App {
 
 	public static void main(String[] args) {
 		
-		 Manager manager = new Manager(); 
-		 manager.interact();
-		 
-		
 		/*
-		 * IOHandler io = new IOHandler(); io.writeOutput("output.csv");
-		 */		
+		 * Manager manager = new Manager(); manager.interact();
+		 */		 
+		
+		
+		  IOHandler io = new IOHandler(); 
+		  try {
+			io.getStocksFileInput("input.csv");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 		
 		
 }
 }

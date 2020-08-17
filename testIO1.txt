@@ -1,2 +1,0 @@
-Ticker: TST
-Share price: 101.01

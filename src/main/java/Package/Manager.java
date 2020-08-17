@@ -16,7 +16,7 @@ public class Manager {
 	private String OutputFile = "output.csv";
 	
 	
-	
+	//DISPLAY STOCKS?  Output a stock object and then send to deleteStock to delete it?
 	
 	
 	public void interact() {
