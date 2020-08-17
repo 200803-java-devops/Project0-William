@@ -1,6 +1,7 @@
 package main.java.Package;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Scanner;
 import main.java.Package.SQL;
 import main.java.Package.IOHandler;
@@ -10,12 +11,15 @@ import main.java.Package.IOHandler;
 public class Manager {
 	private String controller = "Yes";
 	private String controller2;
-	Scanner sc = new Scanner(System.in);
+	Scanner sc;
 	private String ticker; 
 	private String InputFile = "input.csv";
 	private String OutputFile = "output.csv";
 	
-	
+	//Change from John: new constructor for Manager class to take input stream as argument
+	public Manager(InputStream input){
+		sc = new Scanner(input);
+	}
 	
 	
 	

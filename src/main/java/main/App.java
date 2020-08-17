@@ -9,7 +9,7 @@ public class App {
 
 	public static void main(String[] args) {
 		
-		 Manager manager = new Manager(); 
+		 Manager manager = new Manager(System.in); 
 		 manager.interact();
 		 
 		
