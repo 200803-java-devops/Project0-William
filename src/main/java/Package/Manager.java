@@ -5,61 +5,94 @@ import java.util.Scanner;
 import main.java.Package.SQL;
 import main.java.Package.IOHandler;
 
-//It is this class' job to manage the user prompts and appropriately call methods based on them
+//It is this class' job to manage the user prompts and appropriately call methods based on them.  It also contains the logic for the UI.
 
 public class Manager {
-	private String controller = "Yes";
+	private String controller = "yes";
 	private String controller2;
 	Scanner sc = new Scanner(System.in);
-	private String ticker; 
 	private String InputFile = "input.csv";
 	private String OutputFile = "output.csv";
 	
 	
-	//DISPLAY STOCKS?  Output a stock object and then send to deleteStock to delete it?
 	
 	
 	public void interact() {
-		System.out.println("Welcome.  Give me a stock ticker and I will return its share price and write it to output.txt");
+		System.out.println("Welcome.  Please follow the instructions to interact with the portfolio database.");
+		IOHandler io = new IOHandler();
+		SQL sql = new SQL();
 
-//Adding a switch statement in place of the while could add some functionality.
-		while(controller.equals("Yes")) {
-			//Another while loop?  A method?
-			System.out.println("Would you like to type a ticker or collect it from input.txt?  Type 'console' to enter one yourself and 'file' to collect one from input.txt");
+
+		while(controller.equals("yes")) {
+			System.out.println("Please select an option by typing in the number:" + "\n" + "1. Get stock data from portfolio" + "\n" + "2. Enter new stock data into portfolio" + "\n" + "3. Delete stock data from portfolio" + "\n" + "4. Print the entire portfolio here.");
 			switch (controller2 = sc.nextLine()) {
-				case "console":
-				//**Code for console ticker input...who do I hand this off to?
-					System.out.println("Please type a stock ticker symbol and I will return its share price from the SQL database");
-					ticker = sc.nextLine();
-					System.out.println(SQL.getStock(ticker).getPrice());
-					//Should I be breaking this ^^^ up more?
-					controller = "No";
-					break;
-				case "file":
-				//**create new IOhandler which will get input and pass onto SQL class for query and then do output
-					IOHandler io = new IOHandler();
-					try {
-						io.getFileInput(InputFile);
-					} catch (IOException e) {
-						e.printStackTrace();
+				case "1": //THEY WANT TO RETRIEVE DATA
+					System.out.println("Would you like to input the tickers you want from input.csv and output to output.csv?  Or enter a ticker and return the data here?  Select an option by typing in a number:" + "\n" + "1. From input.csv" + "\n" + "2. From the command line");
+					switch (controller2 = sc.nextLine()) {
+						case "1": //THEY WANT INPUT.CSV AND OUTPUT.CSV
+							//sql.enterStock(io.getTickersFileInput(InputFile));
+							try {
+								io.writeOutputFile(sql.getStock(io.getTickersFileInput(InputFile)), OutputFile);
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
+							break;
+						case "2": //THEY WANT TO ENTER A TICKER FROM THE COMMAND LINE
+							System.out.println("Please type a ticker to retrieve the data");
+							io.writeOutputConsole(sql.getStock(io.getTickerConsole()));
+							break;
+							
+						default:
+							System.out.println("Unknown command.  Try again.");
+							break;
 					}
-						io.writeOutput(OutputFile);
-					//Notice my difference here in how I handle this case vs the other case.  Which one is better?
-					controller = "No";
+				break;
+					
+				case "2": //THEY WANT TO ENTER DATA TO THE DB
+					System.out.println("Would you like to upload the tickers and data from input.csv?  Or enter it here?  Select an option by typing in a number:" + "\n" + "1. From input.csv" + "\n" + "2. From the command line");
+					switch (controller2 = sc.nextLine()) {
+						case "1": //THEY WANT INPUT.CSV
+							
+							try {
+								sql.enterStock(io.getStocksFileInput(InputFile));
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
+							break;
+						case "2": //THEY WANT TO ENTER DATA FROM THE COMMAND LINE
+							sql.enterStock(io.getStockConsole());
+							break;							
+						default:
+							System.out.println("Unknown command.  Try again.");
+							break;
+					}
+					break;
+					
+				case "3": //THEY WANT TO DELETE DATA
+					System.out.println("First, enter the ticker you want to delete from the database:");
+					sql.deleteStock(io.getTickerConsole());
+					break;
+					
+				case "4": //THEY WANT TO VIEW EVERYTHING IN CONSOLE
+					sql.viewAll();
 					break;
 				default:
-					System.out.println("That is an unsupported keyword.  Try again.");
+					System.out.println("Unknown command.  Try again.");
 					break;
 			}
-					
-			System.out.println("Tasks are finished.  Do you want to search for another ticker?  Type Yes or No");
-			controller = sc.nextLine();
+			
+			//THIS WILL RUN AFTER THE SWITCH STATEMENTS ARE DONE
+			System.out.println("Do you want to perform another task?  Type 'yes' to continue.");
+			controller = sc.nextLine().toLowerCase();
 						
 		}
 		System.out.println("shutting down. Goodbye.");
+		sql.closeConnection();
 		sc.close();
 		
 		 
+		
+
 		
 	
 

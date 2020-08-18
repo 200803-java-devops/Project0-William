@@ -3,6 +3,7 @@ package test.java.Junit;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -19,15 +20,29 @@ class SQLTest {
 
 	@Test
 	void getStockTest() {
-		SQL dao = new SQL();
-		Stock stock1 = new Stock("TST");
-		stock1.setPrice(101.01);
-		stock1.setShares(3);
-		Stock stock2 = dao.getStock("TST");
-		System.out.println(stock1.getPrice());
-		System.out.println(stock2.getPrice());
-		assertEquals(stock1.getPrice(), stock2.getPrice());
-		assertEquals(stock1.getShares(), stock2.getShares());
+		SQL sql = new SQL();
+		List<Stock> stocks1 = new ArrayList<Stock>();
+		List<Stock> stocks2 = new ArrayList<Stock>();
+		
+		//Control case
+		Stock s1 = new Stock("TST", 101.01, 3);
+		Stock s2 = new Stock("TSTT", 102.02, 5);
+		stocks1.add(s1);
+		stocks1.add(s2);
+		
+		Stock s3 = new Stock("TST");
+		Stock s4 = new Stock("TSTT");
+		stocks2.add(s3);
+		stocks2.add(s4);
+		sql.getStock(stocks2);
+		
+		assertEquals(stocks1.get(0).getTicker(), stocks2.get(0).getTicker());
+		assertEquals(stocks1.get(0).getPrice(), stocks2.get(0).getPrice());
+		assertEquals(stocks1.get(0).getShares(), stocks2.get(0).getShares());
+		
+		assertEquals(stocks1.get(1).getTicker(), stocks2.get(1).getTicker());
+		assertEquals(stocks1.get(1).getPrice(), stocks2.get(1).getPrice());
+		assertEquals(stocks1.get(1).getShares(), stocks2.get(1).getShares());
 	}
 
 	@Test
@@ -43,23 +58,36 @@ class SQLTest {
 		int shares = 50;
 		
 		try (Connection connection = ConnectionUtil.getConnection()) {
-			try (Statement stmt = connection.createStatement()){
+			try (PreparedStatement stmt = connection.prepareStatement("SELECT * FROM portfolio WHERE ticker = ? AND share_price = ? AND shares = ?;")){
 				connection.setAutoCommit(false);
 				
 				dao.enterStock(stocks);
 				// Check the Portfolio table contains one row with the expected values:
-				//FAILING ON LINE 52
-                try(ResultSet rs=stmt.executeQuery("SELECT * FROM portfolio WHERE ticker = " + stocks.get(0).getTicker() + " AND share_price = " + stocks.get(0).getPrice() + " AND shares = " + stocks.get(0).getShares() + ";"))
-                {
+
+                try {              
+                	stmt.setString(1, stocks.get(0).getTicker());
+                	stmt.setDouble(2, stocks.get(0).getPrice());
+                	stmt.setInt(3, stocks.get(0).getShares());
+
+    				ResultSet rs = stmt.executeQuery();
+
+                			
+                			
+ 
                     assertTrue(rs.next());
                     assertTrue(ticker.contentEquals(rs.getString("ticker")));
                     assertEquals(price, rs.getDouble("share_price"));
                     assertEquals(shares, rs.getInt("shares"));                   
                     assertFalse(rs.next());
-                } 
+                } catch (SQLException e) {
+                	fail(e.toString());
+                } finally {
+                	stmt.close();
+                }
 				
 			} finally {
     			connection.rollback();
+    			connection.close();
     		}
 
 		} catch (SQLException e)
@@ -67,13 +95,3 @@ class SQLTest {
 	            fail(e.toString());
 	        }
 		} 
-		
-	
-	
-	/*
-	 * @Test void deleteStockTest() { //This raises a lot of questions. How would I
-	 * distinguish which set to delete? }
-	 * 
-	 * @Test void modifyStockTest() { //^^ that leads me to think I need the ability
-	 * to adjust the data, like if I sold off some shares. Needing a reference ID. }
-	 */}

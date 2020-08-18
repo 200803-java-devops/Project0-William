@@ -5,8 +5,17 @@ public class Stock {
 	private double price;
 	private int shares;
 	private String date;
+	private int id;
 	//other variables go here, maybe RSI, moving averages, 52wk h and l
 	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	public Stock (String ticker) {
 		this.ticker = ticker;
 	}
