@@ -1,24 +1,25 @@
 package test.java.Junit;
 
-import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
+
 
 import main.java.Package.IOHandler;
 import main.java.model.Stock;
 
-class IOHandlerTest {
+public class IOHandlerTest {
 
 	@Test
-	void getTickersFileInputTest() {
+	public void getTickersFileInputTest() {
 		//You must set up the testIO2.csv file manually to ensure this works
 		IOHandler io = new IOHandler();
 		List<Stock> stocks1 = new ArrayList<Stock>();
@@ -40,7 +41,7 @@ class IOHandlerTest {
 	}
 	
 	@Test
-	void writeOutputFileTest() throws FileNotFoundException {
+	public void writeOutputFileTest() throws FileNotFoundException {
 	//Requires manual setup of testIO1.csv with the parameters set for the stocks in the code below.
 		IOHandler io = new IOHandler();
 		List<Stock> stocks = new ArrayList<Stock>();

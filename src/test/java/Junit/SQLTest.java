@@ -1,25 +1,27 @@
 package test.java.Junit;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.fail;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import main.java.Package.ConnectionUtil;
 import main.java.Package.SQL;
 import main.java.model.Stock;
 
-class SQLTest {
+public class SQLTest {
 
 	@Test
-	void getStockTest() {
+	public void getStockTest() {
 		SQL sql = new SQL();
 		List<Stock> stocks1 = new ArrayList<Stock>();
 		List<Stock> stocks2 = new ArrayList<Stock>();
@@ -36,17 +38,18 @@ class SQLTest {
 		stocks2.add(s4);
 		sql.getStock(stocks2);
 		
+		
 		assertEquals(stocks1.get(0).getTicker(), stocks2.get(0).getTicker());
-		assertEquals(stocks1.get(0).getPrice(), stocks2.get(0).getPrice());
+		assertEquals(stocks1.get(0).getPrice(), stocks2.get(0).getPrice(), 0.00001);
 		assertEquals(stocks1.get(0).getShares(), stocks2.get(0).getShares());
 		
 		assertEquals(stocks1.get(1).getTicker(), stocks2.get(1).getTicker());
-		assertEquals(stocks1.get(1).getPrice(), stocks2.get(1).getPrice());
+		assertEquals(stocks1.get(1).getPrice(), stocks2.get(1).getPrice(), 0.00001);
 		assertEquals(stocks1.get(1).getShares(), stocks2.get(1).getShares());
 	}
 
 	@Test
-	void enterStockTest() {
+	public void enterStockTest() {
 		SQL dao = new SQL();
 		ArrayList<Stock> stocks = new ArrayList<Stock>();
 		Stock stock1 = new Stock("TESTER", 101.01, 50);
@@ -76,7 +79,7 @@ class SQLTest {
  
                     assertTrue(rs.next());
                     assertTrue(ticker.contentEquals(rs.getString("ticker")));
-                    assertEquals(price, rs.getDouble("share_price"));
+                    assertEquals(price, rs.getDouble("share_price"), 0.00001);
                     assertEquals(shares, rs.getInt("shares"));                   
                     assertFalse(rs.next());
                 } catch (SQLException e) {
@@ -95,3 +98,4 @@ class SQLTest {
 	            fail(e.toString());
 	        }
 		} 
+}	

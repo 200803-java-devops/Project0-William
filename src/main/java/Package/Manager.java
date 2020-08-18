@@ -3,6 +3,7 @@ package main.java.Package;
 import java.io.IOException;
 import java.util.Scanner;
 import main.java.Package.SQL;
+import main.java.thread.myThread;
 import main.java.Package.IOHandler;
 
 //It is this class' job to manage the user prompts and appropriately call methods based on them.  It also contains the logic for the UI.
@@ -18,7 +19,9 @@ public class Manager {
 	
 	
 	public void interact() {
-		System.out.println("Welcome.  Please follow the instructions to interact with the portfolio database.");
+		System.out.println("Welcome.  Please follow the instructions to interact with the portfolio database." + "\n" + "You will receive the latest S&P 500 data every 60 seconds and it will also be logged.");
+		myThread thread = new myThread();
+		thread.start();
 		IOHandler io = new IOHandler();
 		SQL sql = new SQL();
 
@@ -87,6 +90,7 @@ public class Manager {
 						
 		}
 		System.out.println("shutting down. Goodbye.");
+		thread.stop();
 		sql.closeConnection();
 		sc.close();
 		

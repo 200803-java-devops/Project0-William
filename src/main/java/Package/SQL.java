@@ -23,7 +23,7 @@ public class SQL {
 	public void viewAll() {
 		try {
 			connection = ConnectionUtil.getConnection();
-			stmt = connection.prepareStatement("SELECT * FROM portfolio;");
+			stmt = connection.prepareStatement("SELECT * FROM portfolio ORDER BY ticker;");
 			ResultSet rs = stmt.executeQuery();
 			ResultSetMetaData rsmd = rs.getMetaData();
 			int colNums = rsmd.getColumnCount();
