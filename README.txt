@@ -1,13 +1,14 @@
 Stock ticker data
-A poor man's attempt to create a project that fulfills various requirements
+A stock investment portfolio application.
 
 FEATURES
--Can take in a stock ticker symbol via console
-	-using input, returns share price from SQL DB
-	-Can currently take a single or multiple inputs as tickers to retrieve share price data from the DB.
--Can output DB data into output.csv for easy spreadsheet abilities
--Can alternatively output into console.
--Utilizes collections API for file I/O
--Contains functioning Junit tests that are a little janky (IN THIS COMMIT, ONE JUNIT TEST NOT FUNCTIONING).
--Functioning Maven support
-*-Docker support, a more fleshed out DB, concurrency, and more abilities to interact with the DB are coming in the later commits.
+-Can take in a stock ticker symbol via console to retrieve data.
+-Can take ticker input from csv file to retrieve data.
+-Can output DB data into output.csv for easy spreadsheet abilities.
+-Can take data input from CSV to insert into the DB.
+-Utilizes collections API for file I/O.
+-Can add, delete, or view data from the command line.
+-Contains functioning Junit tests, though the application would benefit from more being added.
+-Functioning Maven support.
+*-Concurrency coming soon.
+
