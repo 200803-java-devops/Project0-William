@@ -18,3 +18,5 @@ Future features to add:
 -Live stock market data and real S&P 500 updates.
 -More Junit testing.
 -More columns added for each ticker to display additional data.
+-A method to update data.
+-Adjust names of methods, classes, and packages to follow naming conventions.
