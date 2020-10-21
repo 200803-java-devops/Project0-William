@@ -13,9 +13,13 @@ import main.java.Package.ConnectionUtil;
 
 import main.java.model.Stock;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 //It is this class' job to query the database and return data
 
 public class SQL {
+	private final Logger log = LoggerFactory.getLogger(this.getClass());
 
 	Connection connection = null;
 	PreparedStatement stmt = null;
@@ -55,6 +59,7 @@ public class SQL {
 			}
 			if (tester.contains(0)) {
 				System.out.println("There was an issue with the query.  Check your input again or check the code.");
+				log.error("Query was rejected");
 				return false;
 				//ROLLBACK?
 			} else {
@@ -64,6 +69,7 @@ public class SQL {
 		
 		} catch (SQLException e) {
 			e.printStackTrace();
+			log.error("Query was rejected");
 			return false;
 		}
 		

@@ -1,6 +1,8 @@
 Stock ticker data
 A stock investment portfolio application.
 
+LOGGING NOT WORKING PROPERLY
+
 FEATURES
 -Can take in a stock ticker symbol via console to retrieve data.
 -Can take ticker input from csv file to retrieve data.
@@ -15,6 +17,7 @@ FEATURES
 
 
 Future features to add:
+-Handling input mismatch for the SQL queries needs to be implemented.
 -Live stock market data and real S&P 500 updates.
 -More Junit testing.
 -More columns added for each ticker to display additional data.

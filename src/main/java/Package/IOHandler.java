@@ -7,16 +7,19 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 import main.java.model.Stock;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 //It is this class' job to read and write to external files as well as handle console input/output
 
 
 public class IOHandler {
-
+	private final Logger log = LoggerFactory.getLogger(this.getClass());
 	public FileWriter writer;
 	BufferedReader br;
 	
@@ -29,18 +32,25 @@ public class IOHandler {
 	}
 	
 	public List<Stock> getStockConsole() {
+		log.debug("console input was run");
 		List<Stock> stock = new ArrayList<Stock>();
 		Stock s = new Stock();
 		Scanner sc = new Scanner(System.in);
-		System.out.println("Enter the stock ticker:");
-		s.setTicker(sc.nextLine());
-		System.out.println("Enter the stock share price:");
-		s.setPrice(sc.nextDouble());
-		System.out.println("Enter number of shares:");
-		s.setShares(sc.nextInt());
-		System.out.println("Inserting data into portfolio...");
-		stock.add(s);
-		return stock;
+		try {
+			System.out.println("Enter the stock ticker:");
+			s.setTicker(sc.nextLine());
+			System.out.println("Enter the stock share price:");
+			s.setPrice(sc.nextDouble());
+			System.out.println("Enter number of shares:");
+			s.setShares(sc.nextInt());
+			System.out.println("Inserting data into portfolio...");
+			stock.add(s);
+			return stock;
+		} catch (InputMismatchException e) {
+			e.printStackTrace();
+			log.error("InputMismatchException occurred!");
+			return stock;
+		}
 	}
 	
 	public List<Stock> getTickerConsole() {

@@ -1,0 +1,3 @@
+FROM openjdk:13-jdk-alpine
+COPY Project0.jar ./target/Application.jar
+ENTRYPOINT java -jar target/Application.jar
