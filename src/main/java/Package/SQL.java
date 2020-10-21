@@ -1,4 +1,4 @@
-package main.java.Package;
+package Package;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,9 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import main.java.Package.ConnectionUtil;
+import Package.ConnectionUtil;
 
-import main.java.model.Stock;
+import model.Stock;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

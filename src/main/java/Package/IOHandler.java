@@ -1,4 +1,4 @@
-package main.java.Package;
+package Package;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
-import main.java.model.Stock;
+import model.Stock;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

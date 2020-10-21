@@ -1,10 +1,11 @@
-package main.java.Package;
+package Package;
 
 import java.io.IOException;
 import java.util.Scanner;
-import main.java.Package.SQL;
-import main.java.thread.myThread;
-import main.java.Package.IOHandler;
+import Package.SQL;
+import thread.myThread;
+import Package.IOHandler;
+import model.Stock;
 
 //It is this class' job to manage the user prompts and appropriately call methods based on them.  It also contains the logic for the UI.
 

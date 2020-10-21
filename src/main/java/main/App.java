@@ -1,6 +1,6 @@
 package main;
 
-import main.java.Package.Manager;
+import Package.Manager;
 
 public class App {
 
